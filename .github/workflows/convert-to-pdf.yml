@@ -25,10 +25,12 @@ jobs:
 
     - name: Generate PDF
       run: |
+        mkdir -p public
         pandoc -s -o public/manual.pdf $(find . -name '*.md' | sort)
 
-    - name: Upload PDF to GitHub Pages
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
+        publish_branch: gh-pages  # Ensure this matches your GitHub Pages branch
