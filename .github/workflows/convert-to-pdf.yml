@@ -6,19 +6,19 @@ on:
   push:
     branches: [ main ]
   paths:
-    - 'docs/**.md' # Trigger
+    - 'docs/**.md'  # Trigger workflow on changes to markdown files in the docs folder
 
 jobs:
   converttopdf:
     name: Build PDF
-    runs-on: ubuntu-latest # You can chose a different runner
+    runs-on: ubuntu-latest  # You can choose a different runner
 
     steps:
-      - uses: actions/checkout@v3 # Checkout the code
-      
-      - uses: baileyjm02/markdown-to-pdf@v1 # Checkout the code
+      - uses: actions/checkout@v3  # Checkout the code
+
+      - uses: baileyjm02/markdown-to-pdf@v1  # Use the markdown-to-pdf action
         with:
-          input_dir: docs # Path to folder
-          output_dir: pdfs
-          images_dir: docs/images
-          image_import: ./images
+          input_dir: docs  # Path to the folder containing markdown files
+          output_dir: pdfs  # Output directory for the generated PDF (in the public folder)
+          images_dir: docs/images  # Path to the folder containing images (if applicable)
+          image_import: ./images  # How image paths should be adjusted (optional)
