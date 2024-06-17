@@ -1,24 +1,34 @@
-# .github/workflows/convert-to-pdf.yml
-
-name: Docs to PDF
+name: Generate PDF from Markdown
 
 on:
   push:
-    branches: [ main ]
-  paths:
-    - 'docs/**.md'  # Trigger workflow on changes to markdown files in the docs folder
+    branches:
+      - main  # Change to your default branch if it's not main
 
 jobs:
-  converttopdf:
-    name: Build PDF
-    runs-on: ubuntu-latest  # You can choose a different runner
+  build:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3  # Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - uses: baileyjm02/markdown-to-pdf@v1  # Use the markdown-to-pdf action
-        with:
-          input_dir: docs  # Path to the folder containing markdown files
-          output_dir: pdfs  # Output directory for the generated PDF (in the public folder)
-          images_dir: docs/images  # Path to the folder containing images (if applicable)
-          image_import: ./images  # How image paths should be adjusted (optional)
+    - name: Set up Node.js environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive texlive-xetex
+
+    - name: Generate PDF
+      run: |
+        pandoc -s -o public/manual.pdf $(find . -name '*.md' | sort)
+
+    - name: Upload PDF to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
