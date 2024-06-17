@@ -1,0 +1,24 @@
+# .github/workflows/convert-to-pdf.yml
+
+name: Docs to PDF
+
+on:
+  push:
+    branches: [ main ]
+  paths:
+    - 'docs/**.md' # Trigger
+
+jobs:
+  converttopdf:
+    name: Build PDF
+    runs-on: ubuntu-latest # You can chose a different runner
+
+    steps:
+      - uses: actions/checkout@v3 # Checkout the code
+      
+      - uses: baileyjm02/markdown-to-pdf@v1 # Checkout the code
+        with:
+          input_dir: docs # Path to folder
+          output_dir: pdfs
+          images_dir: docs/images
+          image_import: ./images
