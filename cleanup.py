@@ -5,7 +5,7 @@ import shutil
 
 PROJECT_DIR = "/home/andre/repos/github.com/sample-md-proj"
 
-OUTPUT_DIR = f"{PROJECT_DIR}/output"
+OUTPUT_DIR = f"{PROJECT_DIR}/docs"
 RES_DIR = f"{PROJECT_DIR}/images"
 SINGLE_FILE = f"{OUTPUT_DIR}/single_file.md"
 
